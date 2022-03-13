@@ -4,6 +4,49 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * App\Models\Topic
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $body
+ * @property int $user_id
+ * @property int $category_id
+ * @property int $reply_count
+ * @property int $view_count
+ * @property int $last_reply_user_id
+ * @property int $order
+ * @property string|null $excerpt
+ * @property string|null $slug
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Category|null $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Reply[] $replies
+ * @property-read int|null $replies_count
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\TopicFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Model ordered()
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic recent()
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic recentReplied()
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereExcerpt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereLastReplyUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereReplyCount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereViewCount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic withOrder($order)
+ * @mixin \Eloquent
+ */
 class Topic extends Model
 {
     use HasFactory;
