@@ -18,14 +18,14 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::prefix('v1')->namespace('Api')->name('api.v1.')->group(function() {
-    Route::get('smstest',function () {
+Route::prefix('v1')->namespace('Api')->name('api.v1.')->group(function () {
+    Route::get('smstest', function () {
         $sms = app('easysms');
         try {
             $sms->send(13929410175, [
                 'content'  => '您正在使用阿里云短信测试服务，体验验证码是：${code}，如非本人操作，请忽略本短信！',
                 'template' => 'SMS_154950909',
-                'data' => [
+                'data'     => [
                     'code' => 1234
                 ],
             ]);
@@ -36,11 +36,14 @@ Route::prefix('v1')->namespace('Api')->name('api.v1.')->group(function() {
     });
 
     // 短信验证码
-    Route::post('verificationCodes','VerificationCodesController@store')->name('verificationCodes.store');
+    Route::post('verificationCodes', 'VerificationCodesController@store')->name('verificationCodes.store');
+
+    // 用户注册
+    Route::post('users', 'UserController@store')->name('users.store');
 });
 
-Route::prefix('v2')->name('api.v2.')->group(function() {
-    Route::get('version', function() {
+Route::prefix('v2')->name('api.v2.')->group(function () {
+    Route::get('version', function () {
         return 'this is version v2';
     })->name('version');
 });

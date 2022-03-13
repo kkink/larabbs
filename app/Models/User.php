@@ -80,8 +80,14 @@ class User extends Authenticatable implements MustVerifyEmailContract
         $this->laravelNotify($instance);
     }
 
+    /**
+     * 模型字段白名单
+     * 设置后就可以对模型内字段进行修改
+     * @var string[]
+     */
     protected $fillable = [
         'name',
+        'phone',
         'email',
         'password',
         'introduction',
@@ -119,6 +125,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
         $this->unreadNotifications->markAsRead();
     }
 
+    /**
+     * password字段修改器
+     * @param $value
+     */
     public function setPasswordAttribute($value)
     {
         // 如果值的长度等于 60，即认为是已经做过加密的情况
