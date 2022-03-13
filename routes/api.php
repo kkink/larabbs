@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::prefix('v1')->name('api.v1.')->group(function() {
+Route::prefix('v1')->namespace('Api')->name('api.v1.')->group(function() {
     Route::get('smstest',function () {
         $sms = app('easysms');
         try {
@@ -34,6 +34,9 @@ Route::prefix('v1')->name('api.v1.')->group(function() {
             dd($message);
         }
     });
+
+    // 短信验证码
+    Route::post('verificationCodes','VerificationCodesController@store')->name('verificationCodes.store');
 });
 
 Route::prefix('v2')->name('api.v2.')->group(function() {
