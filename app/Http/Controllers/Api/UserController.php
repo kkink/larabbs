@@ -20,7 +20,7 @@ class UserController extends Controller
         }
 
         // 可防止时序攻击的字符串比较
-        if (!hash_equals($verifyData['code'], $request->verification_code)) {
+        if (!hash_equals(strtolower($verifyData['code']), strtolower($request->verification_code))) {
             // 返回401
             throw new AuthenticationException('验证码错误');
         }
