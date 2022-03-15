@@ -70,12 +70,16 @@ Route::prefix('v1')
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
                 // 游客可以访问的接口
-
                 // 某个用户的详情
                 Route::get('users/{user}', 'UserController@show')->name('users.show');
 
                 // 分类列表
                 Route::get('categories', 'CategoriesController@index')->name('categories.index');
+
+                // 话题列表，详情
+                Route::resource('topics', 'TopicsController')->only([
+                    'index', 'show'
+                ]);
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
@@ -87,6 +91,11 @@ Route::prefix('v1')
 
                     // 上传图片
                     Route::post('images', 'ImagesController@store')->name('images.store');
+
+                    // 发布话题，修改话题，删除话题
+                    Route::resource('topics', 'TopicsController')->only([
+                        'store', 'update', 'destroy'
+                    ]);
                 });
             });
 
