@@ -34,9 +34,27 @@ class TopicsController extends Controller
      */
     public function update(TopicRequest $request, Topic $topic)
     {
+        // 修改权限检测
         $this->authorize('update', $topic);
 
         $topic->update($request->all());
+
         return new TopicResource($topic);
+    }
+
+    /**
+     * 删除话题
+     * @param Topic $topic
+     * @return TopicResource
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function destroy(Topic $topic)
+    {
+        // 删除权限检测
+        $this->authorize('destroy', $topic);
+
+        $topic->delete();
+
+        return response(null, 204);
     }
 }
