@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Queries\TopicQuery;
 use App\Http\Requests\Api\TopicRequest;
 use App\Http\Resources\TopicResource;
 use App\Models\Topic;
@@ -67,7 +68,7 @@ class TopicsController extends Controller
      * @param Topic $topic
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(Request $request, Topic $topic)
+    public function index(Request $request, TopicQuery $query)
     {
 //        $query = $topic->query();
 //
@@ -82,33 +83,45 @@ class TopicsController extends Controller
 //            ->paginate();
 
         // 使用 laravel-query-builder 组件后
-        $topics = QueryBuilder::for(Topic::class)
-            ->allowedIncludes('user', 'category')
-            ->allowedFilters([
-                'title',
-                // 精确过滤器
-                AllowedFilter::exact('category_id'),
-                AllowedFilter::scope('withOrder')->default('recentReplied'),
-            ])
-            ->paginate();
+        $topics = $query->paginate();
 
         return TopicResource::collection($topics);
     }
 
-    public function userIndex(Request $request, User $user)
+    /**
+     * 某个用户的话题列表
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function userIndex(Request $request, User $user, TopicQuery $query)
     {
-        $query = $user->topics()->getQuery();
+//        $query = $user->topics()->getQuery();
+//
+//        $topics = QueryBuilder::for($query)
+//            ->allowedIncludes('user', 'category')
+//            ->allowedFilters([
+//                'title',
+//                // 精确过滤器
+//                AllowedFilter::exact('category_id'),
+//                AllowedFilter::scope('withOrder')->default('recentReplied'),
+//            ])
+//            ->paginate();
 
-        $topics = QueryBuilder::for($query)
-            ->allowedIncludes('user', 'category')
-            ->allowedFilters([
-                'title',
-                // 精确过滤器
-                AllowedFilter::exact('category_id'),
-                AllowedFilter::scope('withOrder')->default('recentReplied'),
-            ])
-            ->paginate();
+        // 优化后的写法
+        $topics = $query->where('user_id',$user->id)->paginate();
 
         return TopicResource::collection($topics);
+    }
+
+    /**
+     * 话题详情
+     * @param $topicId
+     * @return TopicResource
+     */
+    public function show($topicId, TopicQuery $query)
+    {
+        $topics = $query->findOrFail($topicId);
+        return new TopicResource($topics);
     }
 }

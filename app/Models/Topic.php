@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * App\Models\Topic
@@ -107,4 +108,12 @@ class Topic extends Model
         $this->reply_count = $this->replies->count();
         $this->save();
     }
+
+//    public function resolveRouteBinding($value)
+//    {
+//        return QueryBuilder::for(self::class)
+//            ->allowedIncludes('user', 'category')
+//            ->where($this->getRouteKeyName(),$value)
+//            ->first();
+//    }
 }
