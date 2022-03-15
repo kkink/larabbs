@@ -66,10 +66,19 @@ Route::prefix('v1')
 
             });
 
-        // 需要频次限制的路由
+        // 需要频次限制的路由，默认 1 分钟 60 次
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
+                // 游客可以访问的接口
 
+                // 某个用户的详情
+                Route::get('users/{user}','UserController@show')->name('users.show');
+
+                // 登录后可以访问的接口
+                Route::middleware('auth:api')->group(function (){
+                    // 当前登录用户信息
+                    Route::get('user','UserController@me')->name('user.show');
+                });
             });
 
 

@@ -10,8 +10,19 @@ use Illuminate\Support\Str;
 use Overtrue\EasySms\EasySms;
 use Overtrue\EasySms\Exceptions\NoGatewayAvailableException;
 
+/**
+ * 短信验证
+ */
 class VerificationCodesController extends Controller
 {
+    /**
+     * 发送短信验证码
+     * @param VerificationCodeRequest $request
+     * @param EasySms $easySms
+     * @return \Illuminate\Http\JsonResponse|object
+     * @throws AuthenticationException
+     * @throws \Overtrue\EasySms\Exceptions\InvalidArgumentException
+     */
     public function store(VerificationCodeRequest $request, EasySms $easySms)
     {
         // 从缓存中获取图片验证码的相关信息

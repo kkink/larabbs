@@ -68,11 +68,19 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
     }
 
 
+    /**
+     * 模型引入接口JWTSubject JWT组件所需方法
+     * @return mixed
+     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
 
+    /**
+     * 模型引入接口JWTSubject JWT组件所需方法
+     * @return array
+     */
     public function getJWTCustomClaims()
     {
         return [];
@@ -112,6 +120,8 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
     protected $hidden = [
         'password',
         'remember_token',
+        'weixin_openid',
+        'weixin_unionid',
     ];
 
     protected $casts = [

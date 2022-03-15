@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /**
+     * 用户注册
+     * @param UserRequest $request
+     * @return UserResource
+     * @throws AuthenticationException
+     */
     public function store(UserRequest $request)
     {
         $verifyData = \Cache::get($request->verification_key);
@@ -34,6 +40,27 @@ class UserController extends Controller
         // 清除验证码缓存
         \Cache::forget($request->verification_key);
 
+        return (new UserResource($user))->showSensitiveFields();
+    }
+
+    /**
+     * 获取单个用户信息
+     * @param User $user
+     * @param Request $request
+     * @return UserResource
+     */
+    public function show(User $user, Request $request)
+    {
         return new UserResource($user);
+    }
+
+    /**
+     * 本人的用户信息
+     * @param Request $request
+     * @return UserResource
+     */
+    public function me(Request $request)
+    {
+        return (new UserResource($request->user()))->showSensitiveFields();
     }
 }
