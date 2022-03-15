@@ -72,12 +72,18 @@ Route::prefix('v1')
                 // 游客可以访问的接口
 
                 // 某个用户的详情
-                Route::get('users/{user}','UserController@show')->name('users.show');
+                Route::get('users/{user}', 'UserController@show')->name('users.show');
 
                 // 登录后可以访问的接口
-                Route::middleware('auth:api')->group(function (){
+                Route::middleware('auth:api')->group(function () {
                     // 当前登录用户信息
-                    Route::get('user','UserController@me')->name('user.show');
+                    Route::get('user', 'UserController@me')->name('user.show');
+
+                    // 编辑登录用户信息
+                    Route::patch('user', 'UserController@update')->name('user.update');
+
+                    // 上传图片
+                    Route::post('images', 'ImagesController@store')->name('images.store');
                 });
             });
 

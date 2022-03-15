@@ -55,6 +55,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $phone
+ * @property string|null $weixin_openid 微信标识openid
+ * @property string|null $weixin_unionid 微信unionid
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereWeixinOpenid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereWeixinUnionid($value)
  */
 class User extends Authenticatable implements MustVerifyEmailContract, JWTSubject
 {
