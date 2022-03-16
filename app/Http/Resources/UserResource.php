@@ -29,6 +29,7 @@ class UserResource extends JsonResource
         // 增加数据
         $data['bound_phone']  = $this->resource->phone ? true : false;// 是否绑定手机号
         $data['bound_wechat'] = $this->resource->weixin_unionid || $this->resource->weixin_openid ? true : false;// 是否绑定微信
+        $data['roles']        = RoleResource::collection($this->whenLoaded('roles'));// 用户权限列表
 
         return $data;
     }
