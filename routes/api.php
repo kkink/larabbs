@@ -84,6 +84,12 @@ Route::prefix('v1')
                     'index', 'show'
                 ]);
 
+                // 话题回复列表
+                Route::get('topics/{topic}/replies','RepliesController@index')->name('topics.replies.index');
+
+                // 某个用户的回复列表
+                Route::get('users/{user}/replies','RepliesController@userIndex')->name('user.replies.index');
+
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
                     // 当前登录用户信息

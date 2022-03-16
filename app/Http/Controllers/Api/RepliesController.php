@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Queries\ReplyQuery;
 use App\Http\Requests\Api\ReplyRequest;
 use App\Http\Resources\ReplyResource;
 use App\Models\Reply;
@@ -44,9 +45,28 @@ class RepliesController extends Controller
         }
 
         // 权限策略
-        $this->authorize('destroy',$reply);
+        $this->authorize('destroy', $reply);
         $reply->delete();
 
-        return response(null,204);
+        return response(null, 204);
+    }
+
+    /**
+     * 某个话题的回复列表
+     * @param Topic $topic
+     * @return ReplyResource
+     */
+    public function index($topicId, ReplyQuery $query)
+    {
+        $replies = $query->where('topic_id', $topicId)->paginate();
+
+        return ReplyResource::collection($replies);
+    }
+
+    public function userIndex($userId, ReplyQuery $query)
+    {
+        $replies = $query->where('user_id',$userId)->paginate();
+
+        return ReplyResource::collection($replies);
     }
 }
