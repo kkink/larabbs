@@ -32,4 +32,16 @@ class NotificationsController extends Controller
             'unread_count' => $request->user()->notification_count,
         ]);
     }
+
+    /**
+     * 消息已读
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function read(Request $request)
+    {
+        $request->user()->markAsRead();
+
+        return response(null,204);
+    }
 }
