@@ -85,10 +85,10 @@ Route::prefix('v1')
                 ]);
 
                 // 话题回复列表
-                Route::get('topics/{topic}/replies','RepliesController@index')->name('topics.replies.index');
+                Route::get('topics/{topic}/replies', 'RepliesController@index')->name('topics.replies.index');
 
                 // 某个用户的回复列表
-                Route::get('users/{user}/replies','RepliesController@userIndex')->name('user.replies.index');
+                Route::get('users/{user}/replies', 'RepliesController@userIndex')->name('user.replies.index');
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
@@ -110,7 +110,10 @@ Route::prefix('v1')
                     Route::post('topics/{topic}/replies', 'RepliesController@store')->name('topics.replies.store');
 
                     // 删除回复
-                    Route::delete('topics/{topic}/replies/{reply}','RepliesController@destroy')->name('topics.replies.destroy');
+                    Route::delete('topics/{topic}/replies/{reply}', 'RepliesController@destroy')->name('topics.replies.destroy');
+
+                    // 通知列表
+                    Route::get('notifications', 'NotificationsController@index')->name('notifications.index');
                 });
             });
 
