@@ -90,6 +90,9 @@ Route::prefix('v1')
                 // 某个用户的回复列表
                 Route::get('users/{user}/replies', 'RepliesController@userIndex')->name('user.replies.index');
 
+                // 资源推荐
+                Route::get('links','LinksController@index')->name('links.index');
+
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function () {
                     // 当前登录用户信息
