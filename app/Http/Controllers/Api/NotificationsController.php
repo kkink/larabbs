@@ -8,11 +8,28 @@ use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
 {
+    /**
+     * 我的消息通知列表
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function index(Request $request)
     {
         // 用户模型的 notifications 方法是 Laravel 的消息通知系统 为我们提供的方法，按通知创建时间倒叙排序
         $notifications = $request->user()->notifications()->paginate();
 
         return NotificationResource::collection($notifications);
+    }
+
+    /**
+     * 我的未读消息数量
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function stats(Request $request)
+    {
+        return response()->json([
+            'unread_count' => $request->user()->notification_count,
+        ]);
     }
 }

@@ -101,6 +101,7 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
 
         // 只有数据库类型通知才需提醒，直接发送 Email 或者其他的都 Pass
         if (method_exists($instance, 'toDatabase')) {
+            // 未读消息数量+1
             $this->increment('notification_count');
         }
 
